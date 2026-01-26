@@ -50,6 +50,7 @@ export default function RatingButtons({
             }}
             onBlur={() => setHoverRating(null)}
             onClick={() => onSelectRating(option?.value)}
+            className={styles.button}
           >
             <img
               src={
@@ -57,8 +58,9 @@ export default function RatingButtons({
                   ? "/images/star-filled.svg"
                   : "/images/star-unfilled.svg"
               }
-              alt=""
+              alt="rating star"
               aria-hidden="true"
+              className={styles.button__image}
             />{" "}
           </button>
         );

@@ -3,3 +3,12 @@
   flex-direction: row;
   gap: 32px;
 }
+
+@media (max-width: 640px) {
+  .buttons {
+    gap: 8px;
+  }
+  .button__image {
+    width: 32px;
+  }
+}
