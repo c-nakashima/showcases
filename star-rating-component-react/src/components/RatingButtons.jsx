@@ -1,17 +1,19 @@
 import { useState } from "react";
 import styles from "./RatingButtons.module.css";
 
-//rating option
-const ratingOption = [1, 2, 3, 4, 5];
-
 /**
  * Rating Button List Component
  *
+ * @param {number[]} ratingOption - Rating option
  * @param {number|null} selectedRating - Currently selected rating. Null if not selected.
  * @param {(value: number) => void} onSelectRating - Callback fired when a rating is selected.
  * @param {(event: React.FormEvent<HTMLFormElement>) => void} onSubmit - Form submit handler.
  */
-export default function RatingButtons({ selectedRating, onSelectRating }) {
+export default function RatingButtons({
+  ratingOption,
+  selectedRating,
+  onSelectRating,
+}) {
   // Hovered Rating
   const [hoverRating, setHoverRating] = useState(null);
   // Displayed Rating
