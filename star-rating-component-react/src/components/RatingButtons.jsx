@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import styles from "./RatingButtons.module.css";
+import styles from "./RatingButtons.module.css";
 
 //rating option
 const ratingOption = [1, 2, 3, 4, 5];
@@ -24,6 +24,7 @@ export default function RatingButtons({ selectedRating, onSelectRating }) {
       role="radiogroup"
       aria-label="Rate from 1 to 5"
       onMouseLeave={() => setHoverRating(null)}
+      className={styles.buttons}
     >
       {ratingOption.map((value) => {
         // If the star is selected or not

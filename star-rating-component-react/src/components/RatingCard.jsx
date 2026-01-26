@@ -1,4 +1,5 @@
 import RatingButtons from "./RatingButtons";
+import styles from "./RatingCard.module.css";
 
 /**
  * RatingCard Component
@@ -9,21 +10,15 @@ import RatingButtons from "./RatingButtons";
  */
 export default function RatingCard({ selectedRating, onSelectRating }) {
   return (
-    <section className="card" aria-labelledby="rating-title">
-      <div className="card__icon" aria-hidden="true">
-        <img src="/images/icon-star.svg" alt="" />
-      </div>
-
-      <h1 id="rating-title" className="card__title">
-        How did we do?
+    <section className={styles.card} aria-labelledby="rating-title">
+      <h1 id="rating-title" className={styles.card__title}>
+        How many stars would you give to our Online Code Editor?
       </h1>
-
       <RatingButtons
         selectedRating={selectedRating}
         onSelectRating={onSelectRating}
       />
-
-      <p className="card__description">
+      <p className={styles.card__description}>
         Please let us know how we did with your support request. All feedback is
         appreciated to help us improve our offering!
       </p>
