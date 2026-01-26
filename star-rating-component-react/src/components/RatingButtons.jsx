@@ -4,13 +4,13 @@ import styles from "./RatingButtons.module.css";
 /**
  * Rating Button List Component
  *
- * @param {number[]} ratingOption - Rating option
+ * @param {import("../types").RatingOption[]} ratingOptions - Rating option
  * @param {number|null} selectedRating - Currently selected rating. Null if not selected.
  * @param {(value: number) => void} onSelectRating - Callback fired when a rating is selected.
  * @param {(event: React.FormEvent<HTMLFormElement>) => void} onSubmit - Form submit handler.
  */
 export default function RatingButtons({
-  ratingOption,
+  ratingOptions,
   selectedRating,
   onSelectRating,
 }) {
@@ -28,28 +28,28 @@ export default function RatingButtons({
       onMouseLeave={() => setHoverRating(null)}
       className={styles.buttons}
     >
-      {ratingOption.map((value) => {
+      {ratingOptions.map((option) => {
         // If the star is selected or not
-        const isSelected = value <= displayRating;
+        const isSelected = option?.value <= displayRating;
         return (
           <button
-            key={value}
+            key={option?.value}
             type="button"
             role="radio"
-            aria-checked={selectedRating === value}
+            aria-checked={selectedRating === option?.value}
             // className={styles.starButton}
             onMouseEnter={() => {
-              if (selectedRating == null || value > selectedRating) {
-                setHoverRating(value);
+              if (selectedRating == null || option?.value > selectedRating) {
+                setHoverRating(option?.value);
               }
             }}
             onFocus={() => {
-              if (selectedRating == null || value > selectedRating) {
-                setHoverRating(value);
+              if (selectedRating == null || option?.value > selectedRating) {
+                setHoverRating(option?.value);
               }
             }}
             onBlur={() => setHoverRating(null)}
-            onClick={() => onSelectRating(value)}
+            onClick={() => onSelectRating(option?.value)}
           >
             <img
               src={
