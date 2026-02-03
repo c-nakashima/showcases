@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import Button from "./Button.vue";
+
 /**
- * Props definition for the extension card component
+ * Extension card component
  * - logoPath: Extension logo image path
  * - name: Extension name
  * - description: Description text
@@ -34,14 +36,7 @@ defineProps<Props>();
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <button
-        className="bg-white border border-neutral-300 text-neutral-700
-            py-2 px-4 rounded-full
-            hover:bg-neutral-50 transition"
-      >
-        Remove
-      </button>
-
+      <Button text="Remove" />
       <div class="relative inline-block w-11 h-5">
         <input
           :checked="isActive"
