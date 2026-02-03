@@ -7,3 +7,6 @@ dist
 
 # env
 .env
+
+#template
+Readme-template.md
