@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import data from "../public/data.json";
-import { TabGroup } from "@/components/ui";
-import { ExtensionCard } from "@/components/extension";
-
-// Tab options
-const tabs = [
-  { id: "all", text: "All" },
-  { id: "active", text: "Active" },
-  { id: "inactive", text: "Inactive" },
-];
+import { ExtensionCard, ExtensionTabGroup } from "@/components/extension";
+import { ExtensionTabId } from "@/types/extension";
 
 // Currently active tabs
-const activeTabs = ref<string[]>(["active"]);
+const activeTabs = ref<ExtensionTabId[]>(["active"]);
 </script>
 
 <template>
@@ -21,12 +14,12 @@ const activeTabs = ref<string[]>(["active"]);
       <!-- Header -->
       <header class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-semibold">Extension List</h1>
-        <TabGroup v-model="activeTabs" :items="tabs" />
+        <ExtensionTabGroup v-model="activeTabs" />
       </header>
 
       <!-- Grid -->
       <div
-        class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
+        class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
         <li v-for="item in data">
           <ExtensionCard

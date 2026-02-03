@@ -1,13 +1,10 @@
-<!-- /**
- * Base Tab Group component
- */ -->
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { Tab } from "@/components/ui";
 import type { TabItem } from "@/components/ui";
 
 /**
- * Tab Group component
+ * Base Tab Group component
  * - modelValue: active tab ids (v-model)
  * - items: tab item
  */
