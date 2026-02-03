@@ -4,7 +4,7 @@ import { ExtensionCard } from "@/components/extension";
 </script>
 
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen bg-gradient-to-b from-[#EBF2FC] to-[#EEFBF9]">
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
       <header class="mb-6 flex items-center justify-between">

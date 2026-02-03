@@ -19,7 +19,7 @@ defineProps<Props>();
 </script>
 
 <template>
-  <Card class="h-[200px]">
+  <Card class="h-[200px] bg-white">
     <template #header>
       <div class="flex gap-4">
         <img
