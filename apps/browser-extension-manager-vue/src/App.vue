@@ -12,8 +12,26 @@ const activeTabs = ref<ExtensionTabId[]>(["active"]);
   <div class="min-h-screen bg-gradient-to-b from-[#EBF2FC] to-[#EEFBF9]">
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
+      <h1 class="flex justify-between bg-white rounded rounded-2xl p-4 mb-16">
+        <img
+          src="../public/assets/images/logo.svg"
+          alt="extensions logo"
+          class="w-[180px]"
+        />
+        <div
+          class="bg-neutral-100 rounded rounded-[12px] w-[50px] h-[50px] p-[14px]"
+        >
+          <img
+            src="../public/assets/images/icon-moon.svg"
+            alt="extensions logo"
+            class="w-[180px]"
+          />
+        </div>
+      </h1>
+
+      <!-- Contents -->
       <header class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-semibold">Extension List</h1>
+        <h2 class="text-3xl font-semibold">Extension List</h2>
         <ExtensionTabGroup v-model="activeTabs" />
       </header>
 
