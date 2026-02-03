@@ -2,18 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* global */
-:root {
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+@layer base {
+  body {
+    @apply font-sans;
+  }
 }
 
+/* global */
 html,
 body,
 #app {
