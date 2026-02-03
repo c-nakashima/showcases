@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Card } from "@/components/ui";
+import data from "../public/data.json";
+import { ExtensionCard } from "@/components/extension";
 </script>
 
 <template>
@@ -14,12 +15,14 @@ import { Card } from "@/components/ui";
       <div
         class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
-        <Card
-          logoPath="../../../public/assets/images/icon-moon.svg"
-          name="JSONWizard"
-          description="Formats, validates, and prettifies JSON responses in-browser."
-          :isActive="true"
-        />
+        <li v-for="item in data">
+          <ExtensionCard
+            :logoPath="item.logoPath"
+            :name="item.name"
+            :description="item.description"
+            :isActive="item.isActive"
+          />
+        </li>
       </div>
     </div>
   </div>
