@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 好きなら最低限のグローバルだけ残す */
+/* global */
 :root {
   font-family:
     system-ui,

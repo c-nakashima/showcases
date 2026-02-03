@@ -2,6 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  theme: { extend: {} },
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['"Noto Sans"', "system-ui", "sans-serif"],
+      },
+    },
+  },
   plugins: [],
 } satisfies Config;

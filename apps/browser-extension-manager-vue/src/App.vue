@@ -1,30 +1,26 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+<script setup lang="ts">
+import { Card } from "@/components/ui";
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <div class="min-h-screen">
+    <div class="mx-auto max-w-6xl p-6">
+      <!-- Header -->
+      <header class="mb-6 flex items-center justify-between">
+        <h1 class="text-xl font-semibold">Extension List</h1>
+      </header>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+      <!-- Grid -->
+      <div
+        class="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
+      >
+        <Card
+          logoPath="../../../public/assets/images/icon-moon.svg"
+          name="JSONWizard"
+          description="Formats, validates, and prettifies JSON responses in-browser."
+          :isActive="true"
+        />
+      </div>
+    </div>
+  </div>
+</template>
