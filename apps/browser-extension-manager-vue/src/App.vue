@@ -8,7 +8,7 @@ import { ExtensionCard } from "@/components/extension";
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
       <header class="mb-6 flex items-center justify-between">
-        <h1 class="text-xl font-semibold">Extension List</h1>
+        <h1 class="text-3xl font-semibold">Extension List</h1>
       </header>
 
       <!-- Grid -->
