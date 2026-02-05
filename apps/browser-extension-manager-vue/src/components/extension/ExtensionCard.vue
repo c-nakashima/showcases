@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Card, Switcher } from "@/components/ui";
-import { RemoveButton } from "@/components/extension";
+import { Card, Switcher } from '@/components/ui'
+import { RemoveButton } from '@/components/extension'
 
 /**
  * Extension card component
@@ -10,13 +10,16 @@ import { RemoveButton } from "@/components/extension";
  * - isActive: Whether the extension is enabled (toggle state)
  */
 interface Props {
-  logoPath: string;
-  name: string;
-  description: string;
-  isActive: boolean;
+  logoPath: string
+  name: string
+  description: string
+  isActive: boolean
 }
 
-defineProps<Props>();
+defineProps<Props>()
+const emit = defineEmits<{
+  (e: 'update:isActive', value: boolean): void
+}>()
 </script>
 
 <template>
@@ -46,7 +49,10 @@ defineProps<Props>();
     </template>
 
     <template #footer-right>
-      <Switcher :isActive="isActive" />
+      <Switcher
+        :isActive="isActive"
+        @update:isActive="emit('update:isActive', $event)"
+      />
     </template>
   </Card>
 </template>

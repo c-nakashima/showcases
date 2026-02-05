@@ -1,19 +1,36 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import data from "../public/data.json";
-import { ExtensionTabId } from "@/types/extension";
-import { useTheme } from "@/composables/useTheme";
+import { computed, onMounted, ref } from 'vue'
+import data from '../public/data.json'
+import { Extension, ExtensionTabId } from '@/types/extension'
+import { useTheme } from '@/composables/useTheme'
 //components
-import { ExtensionCard, ExtensionTabGroup } from "@/components/extension";
-import { Header } from "@/components/layout";
+import { ExtensionCard, ExtensionTabGroup } from '@/components/extension'
+import { Header } from '@/components/layout'
 
 // Currently active tabs
-const activeTabs = ref<ExtensionTabId[]>(["active"]);
+const activeTab = ref<ExtensionTabId>('active')
+
+// == Switch Theme
 // Theme related variables/functions
-const { isDark, initTheme, toggleTheme } = useTheme();
+const { isDark, initTheme, toggleTheme } = useTheme()
 // When the component is mounted, initialize the theme
-onMounted(() => initTheme());
-initTheme();
+onMounted(() => initTheme())
+initTheme()
+
+// == Filter Data to Display
+// Extension data
+const extensions = ref<Extension[]>(data)
+// When the tab is changed, filter data to show
+const filteredExtensions = computed(() => {
+  if (activeTab.value === 'all') {
+    return extensions.value
+  } else if (activeTab.value === 'active') {
+    return extensions.value.filter((e) => e.isActive)
+  } else if (activeTab.value === 'inactive') {
+    return extensions.value.filter((e) => !e.isActive)
+  }
+  return extensions.value
+})
 </script>
 
 <template>
@@ -22,26 +39,27 @@ initTheme();
   >
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
-      <Header :isDark @toggleTheme="toggleTheme" />
+      <Header :isDark="isDark" @toggleTheme="toggleTheme" />
 
       <!-- Contents -->
       <div
         class="flex flex-col gap-4 mb-6 items-center sm:flex-row sm:justify-between sm:gap-6"
       >
         <h1 class="text-3xl font-semibold dark:text-white">Extension List</h1>
-        <ExtensionTabGroup v-model="activeTabs" />
+        <ExtensionTabGroup v-model="activeTab" />
       </div>
 
       <!-- Grid -->
       <div
         class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
-        <li v-for="item in data">
+        <li v-for="item in filteredExtensions" :key="item.name">
           <ExtensionCard
             :logoPath="item.logoPath"
             :name="item.name"
             :description="item.description"
             :isActive="item.isActive"
+            @update:isActive="(value) => (item.isActive = value)"
           />
         </li>
       </div>
