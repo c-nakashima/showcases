@@ -8,6 +8,7 @@ import {
   ExtensionCard,
   ExtensionTabGroup,
   ConfirmRemovalModal,
+  EmptyExtensionDisplay,
 } from '@/components/extension'
 import { Header } from '@/components/layout'
 
@@ -132,6 +133,7 @@ const confirmRemove = (extensionName: string) => {
 
       <!-- Grid -->
       <div
+        v-if="filteredExtensions.length > 0"
         class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
         <li v-for="item in filteredExtensions" :key="item.name">
@@ -145,6 +147,7 @@ const confirmRemove = (extensionName: string) => {
           />
         </li>
       </div>
+      <EmptyExtensionDisplay v-else :isDark="isDark" :activeTab="activeTab" />
     </div>
   </div>
 </template>
