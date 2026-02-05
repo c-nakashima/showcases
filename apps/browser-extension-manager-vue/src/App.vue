@@ -9,10 +9,11 @@ const activeTabs = ref<ExtensionTabId[]>(["active"]);
 // Flag for Light/Dark mode
 const isDark = ref(false);
 
+// Toggle dark/light mode
 const toggleTheme = () => {
   isDark.value = !isDark.value;
 
-  // <html> を取得して、darkクラスをON/OFFする
+  // toggle dark class
   document.documentElement.classList.toggle("dark", isDark.value);
 };
 </script>
@@ -23,7 +24,7 @@ const toggleTheme = () => {
   >
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
-      <h1
+      <header
         class="flex justify-between bg-white rounded rounded-2xl p-4 mb-16 dark:bg-neutral-800"
       >
         <img
@@ -41,13 +42,15 @@ const toggleTheme = () => {
             class="w-[180px]"
           />
         </div>
-      </h1>
+      </header>
 
       <!-- Contents -->
-      <header class="mb-6 flex items-center justify-between">
-        <h2 class="text-3xl font-semibold dark:text-white">Extension List</h2>
+      <div
+        class="flex flex-col gap-4 mb-6 items-center sm:flex-row sm:justify-between sm:gap-6"
+      >
+        <h1 class="text-3xl font-semibold dark:text-white">Extension List</h1>
         <ExtensionTabGroup v-model="activeTabs" />
-      </header>
+      </div>
 
       <!-- Grid -->
       <div
