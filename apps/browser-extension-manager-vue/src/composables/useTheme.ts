@@ -8,8 +8,9 @@ export function useTheme() {
   const isDark = computed(() => theme.value === "dark");
 
   // init: localStorage -> if none, follow OS preference
+  const storageKey = "extension-manager:theme";
   const initTheme = () => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    const savedTheme = localStorage.getItem(storageKey) as Theme | null;
 
     if (savedTheme === "light" || savedTheme === "dark") {
       theme.value = savedTheme;
@@ -30,7 +31,7 @@ export function useTheme() {
   // Toggle theme + save
   const toggleTheme = () => {
     theme.value = theme.value === "dark" ? "light" : "dark";
-    localStorage.setItem("theme", theme.value);
+    localStorage.setItem(storageKey, theme.value);
   };
 
   // Whenever theme changes, apply it

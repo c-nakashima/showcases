@@ -18,8 +18,24 @@ onMounted(() => initTheme())
 initTheme()
 
 // == Filter Data to Display
-// Extension data
-const extensions = ref<Extension[]>(data)
+const storageKey = 'extension-manager:extensions'
+// Load extensions from localStorage
+const loadExtensions = (): Extension[] => {
+  // If the window is not defined, return the data
+  if (typeof window === 'undefined') return data
+  // Try to get the extensions from localStorage
+  try {
+    const raw = localStorage.getItem(storageKey)
+    // If the extensions are not found, return the data
+    if (!raw) return data
+    // Parse the extensions from the localStorage
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : data
+  } catch {
+    return data
+  }
+}
+const extensions = ref<Extension[]>(loadExtensions())
 // When the tab is changed, filter data to show
 const filteredExtensions = computed(() => {
   if (activeTab.value === 'all') {
@@ -30,6 +46,21 @@ const filteredExtensions = computed(() => {
     return extensions.value.filter((e) => !e.isActive)
   }
   return extensions.value
+})
+
+// When the remove button is clicked, remove the extension from the localStorage
+const handleRemove = (name: string) => {
+  // Filter the extensions to remove the extension (use item's name as a key)
+  extensions.value = extensions.value.filter((item) => item.name !== name)
+  // If the window is not defined, save the extensions to the localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(storageKey, JSON.stringify(extensions.value))
+  }
+}
+
+// When the component is mounted, load the extensions from the localStorage
+onMounted(() => {
+  extensions.value = loadExtensions()
 })
 </script>
 
@@ -60,6 +91,7 @@ const filteredExtensions = computed(() => {
             :description="item.description"
             :isActive="item.isActive"
             @update:isActive="(value) => (item.isActive = value)"
+            @remove="handleRemove"
           />
         </li>
       </div>

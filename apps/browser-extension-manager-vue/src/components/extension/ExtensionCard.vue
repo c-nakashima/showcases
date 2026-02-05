@@ -19,6 +19,7 @@ interface Props {
 defineProps<Props>()
 const emit = defineEmits<{
   (e: 'update:isActive', value: boolean): void
+  (e: 'remove', name: string): void
 }>()
 </script>
 
@@ -45,7 +46,7 @@ const emit = defineEmits<{
     </template>
 
     <template #footer-left>
-      <RemoveButton />
+      <RemoveButton @remove="emit('remove', name)" />
     </template>
 
     <template #footer-right>
