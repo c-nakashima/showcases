@@ -45,15 +45,27 @@ onMounted(() => {
   extensions.value = loadExtensions()
 })
 
+// == Save Extensions ==
+const saveExtensions = (newExtensions: Extension[]) => {
+  extensions.value = newExtensions
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(ExtensionStorageKey, JSON.stringify(newExtensions))
+  }
+}
+
 // == Remove Extension ==
 // When the remove button is clicked, remove the extension from the localStorage
 const handleRemove = (name: string) => {
   // Filter the extensions to remove the extension (use item's name as a key)
-  extensions.value = extensions.value.filter((item) => item.name !== name)
-  // If the window is not defined, save the extensions to the localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(ExtensionStorageKey, JSON.stringify(extensions.value))
-  }
+  saveExtensions(extensions.value.filter((item) => item.name !== name))
+}
+
+// == Toggle Extension ==
+const handleToggleActive = (name: string, isActive: boolean) => {
+  const next = extensions.value.map((item) =>
+    item.name === name ? { ...item, isActive } : item,
+  )
+  saveExtensions(next)
 }
 
 // == Tab Change Handling ==
@@ -93,14 +105,17 @@ watch(activeTab, (value) => {
 // == Remove Modal ==
 const isModalOpen = ref(false)
 const selectedExtensionName = ref('')
+
 const openModal = (extensionName: string) => {
   selectedExtensionName.value = extensionName
   isModalOpen.value = true
 }
+
 const closeModal = () => {
   isModalOpen.value = false
   selectedExtensionName.value = ''
 }
+
 // after the confirm button is clicked, remove the extension from the localStorage
 const confirmRemove = (extensionName: string) => {
   handleRemove(extensionName)
@@ -142,7 +157,7 @@ const confirmRemove = (extensionName: string) => {
             :extensionName="item.name"
             :description="item.description"
             :isActive="item.isActive"
-            @update:isActive="(value) => (item.isActive = value)"
+            @update:isActive="(value) => handleToggleActive(item.name, value)"
             @remove="openModal"
           />
         </li>
