@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import data from "../public/data.json";
+import { useTheme } from "@/composables/useTheme";
 import { ExtensionCard, ExtensionTabGroup } from "@/components/extension";
 import { ExtensionTabId } from "@/types/extension";
 
 // Currently active tabs
 const activeTabs = ref<ExtensionTabId[]>(["active"]);
-// Flag for Light/Dark mode
-const isDark = ref(false);
-
-// Toggle dark/light mode
-const toggleTheme = () => {
-  isDark.value = !isDark.value;
-
-  // toggle dark class
-  document.documentElement.classList.toggle("dark", isDark.value);
-};
+// Theme related variables/functions
+const { isDark, initTheme, toggleTheme } = useTheme();
+// When the component is mounted, initialize the theme
+onMounted(() => initTheme());
+initTheme();
 </script>
 
 <template>
