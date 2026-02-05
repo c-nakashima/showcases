@@ -4,17 +4,17 @@
  * - isDark: Whether the theme is Dark or not
  */
 interface Props {
-  isDark: boolean;
+  isDark: boolean
 }
-defineProps<Props>();
+defineProps<Props>()
 
 // When the theme switch button is clicked,
 // fire toggle Theme and deliver to the parent component
 const emit = defineEmits<{
-  (e: "toggleTheme"): void;
-}>();
+  (e: 'toggleTheme'): void
+}>()
 
-const onToggleTheme = () => emit("toggleTheme");
+const onToggleTheme = () => emit('toggleTheme')
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const onToggleTheme = () => emit("toggleTheme");
       class="w-[180px]"
     />
     <div
-      class="bg-neutral-100 rounded rounded-[12px] w-[50px] h-[50px] p-[14px] cursor-pointer dark:bg-neutral-700"
+      class="bg-neutral-100 rounded rounded-[12px] w-[50px] h-[50px] p-[14px] cursor-pointer hover:bg-neutral-200 dark:bg-neutral-700 hover:dark:bg-neutral-600"
       @click="onToggleTheme"
       aria-label="Toggle theme"
     >
