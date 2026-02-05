@@ -20,11 +20,11 @@ const emit = defineEmits<{
 
 <template>
   <div
-    class="bg-white border border-neutral-300 text-neutral-700 py-2 px-5 rounded-full hover:cursor-pointer"
+    class="py-2 px-5 rounded-full border hover:cursor-pointer"
     :class="
       isActive
-        ? 'bg-red-700 text-white'
-        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50'
+        ? 'bg-red-700 border-red-700 text-white dark:text-neutral-800 dark:bg-red-400 dark:border-red-400'
+        : 'bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-50 dark:bg-neutral-800 dark:hover-neutral-600 dark:text-white dark:border-neutral-600'
     "
     @click="emit('select')"
   >

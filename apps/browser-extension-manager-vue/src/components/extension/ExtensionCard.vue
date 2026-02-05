@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Card, Button, Switcher } from "@/components/ui";
+import { Card, Switcher } from "@/components/ui";
+import { RemoveButton } from "@/components/extension";
 
 /**
  * Extension card component
@@ -19,7 +20,9 @@ defineProps<Props>();
 </script>
 
 <template>
-  <Card class="h-[200px] bg-white">
+  <Card
+    class="h-[200px] bg-white border norder-neutral-200 dark:bg-neutral-800 dark:border-neutral-600"
+  >
     <template #header>
       <div class="flex gap-4">
         <img
@@ -28,8 +31,10 @@ defineProps<Props>();
           alt="Extension logo"
         />
         <div>
-          <div class="font-bold text-xl mb-2">{{ name }}</div>
-          <p class="text-neutral-600 text-base font-sans">
+          <div class="font-bold text-xl mb-2 dark:text-white">
+            {{ name }}
+          </div>
+          <p class="text-neutral-600 text-base font-sans dark:text-neutral-300">
             {{ description }}
           </p>
         </div>
@@ -37,7 +42,7 @@ defineProps<Props>();
     </template>
 
     <template #footer-left>
-      <Button text="Remove" />
+      <RemoveButton />
     </template>
 
     <template #footer-right>

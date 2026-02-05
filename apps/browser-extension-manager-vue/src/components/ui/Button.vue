@@ -9,13 +9,10 @@ interface Props {
 
 defineProps<Props>();
 </script>
+s
 
 <template>
-  <button
-    className="bg-white border border-neutral-300 text-neutral-700
-            py-2 px-4 rounded-full
-            hover:bg-neutral-50 transition"
-  >
+  <button class="py-2 px-4 rounded rounded-full">
     {{ text }}
   </button>
 </template>

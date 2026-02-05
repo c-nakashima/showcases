@@ -19,11 +19,11 @@ defineProps<Props>();
       :checked="isActive"
       id="switch-component-1"
       type="checkbox"
-      class="peer appearance-none w-11 h-6 bg-neutral-300 rounded-full checked:bg-red-700 cursor-pointer transition-colors duration-300"
+      class="peer appearance-none w-11 h-6 rounded-full bg-neutral-300 checked:bg-red-700 cursor-pointer transition-colors duration-300 checked:dark:bg-red-400 dark:bg-neutral-600"
     />
     <label
       for="switch-component-1"
-      class="absolute top-0 left-0 w-6 h-6 bg-white rounded-full border-2 border-neutral-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-red-700 cursor-pointer"
+      class="absolute top-0 left-0 w-6 h-6 bg-white rounded-full border-2 border-neutral-300 dark:border-neutral-600 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-red-700 peer-checked:dark:border-red-400 cursor-pointer"
     />
   </div>
 </template>
