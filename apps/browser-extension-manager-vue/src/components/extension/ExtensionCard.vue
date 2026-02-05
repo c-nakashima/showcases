@@ -52,6 +52,7 @@ const emit = defineEmits<{
     <template #footer-right>
       <Switcher
         :isActive="isActive"
+        :label="`${extensionName} enabled`"
         @update:isActive="emit('update:isActive', $event)"
       />
     </template>

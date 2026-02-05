@@ -2,12 +2,15 @@
  * Base Switcher component
  */ -->
 <script setup lang="ts">
+import { computed } from "vue";
 /**
  * Switcher base component
  * - isActive: Whether the switch is active or not
+ * - label: Accessible label for the input
  */
 interface Props {
   isActive: boolean;
+  label?: string;
 }
 
 const props = defineProps<Props>();
@@ -16,6 +19,7 @@ const emit = defineEmits<{
 }>();
 
 const inputId = `switcher-${Math.random().toString(36).slice(2, 9)}`;
+const ariaLabel = computed(() => props.label ?? "Toggle");
 
 const handleChange = (event: Event) => {
   emit("update:isActive", (event.target as HTMLInputElement).checked);
@@ -27,6 +31,7 @@ const handleChange = (event: Event) => {
     <input
       :checked="props.isActive"
       :id="inputId"
+      :aria-label="ariaLabel"
       type="checkbox"
       class="peer appearance-none w-11 h-6 rounded-full bg-neutral-300 checked:bg-red-700 cursor-pointer transition-colors duration-300 checked:dark:bg-red-400 dark:bg-neutral-600"
       @change="handleChange"
