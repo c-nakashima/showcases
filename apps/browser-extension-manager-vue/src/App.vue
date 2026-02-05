@@ -66,7 +66,7 @@ const {
       </div>
 
       <!-- Grid -->
-      <div
+      <ul
         v-if="filteredExtensions.length > 0"
         class="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]"
       >
@@ -80,7 +80,7 @@ const {
             @remove="openModal"
           />
         </li>
-      </div>
+      </ul>
       <EmptyExtensionDisplay v-else :isDark="isDark" :activeTab="activeTab" />
     </div>
   </div>
