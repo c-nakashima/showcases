@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import data from '../public/data.json'
-import { Extension, ExtensionTabId } from '@/types/extension'
+import { ExtensionTabId } from '@/types/extension'
 import { useTheme } from '@/composables/useTheme'
+import { useExtensionsStorage } from '@/composables/useExtensionsStorage'
 //components
 import {
   ExtensionCard,
@@ -12,61 +13,15 @@ import {
 } from '@/components/extension'
 import { Header } from '@/components/layout'
 
+const { extensions, handleRemove, handleToggleActive } =
+  useExtensionsStorage(data)
+
 // == Switch Theme
 // Theme related variables/functions
 const { isDark, initTheme, toggleTheme } = useTheme()
 // When the component is mounted, initialize the theme
 onMounted(() => initTheme())
 initTheme()
-
-// == Filter Extensions to Display ==
-const ExtensionStorageKey = 'extension-manager:extensions'
-// Load extensions from localStorage
-const loadExtensions = (): Extension[] => {
-  // If the window is not defined, return the data
-  if (typeof window === 'undefined') return data
-  // Try to get the extensions from localStorage
-  try {
-    const raw = localStorage.getItem(ExtensionStorageKey)
-    // If the extensions are not found, return the data
-    if (!raw) return data
-    // Parse the extensions from the localStorage
-    const parsed = JSON.parse(raw)
-    return Array.isArray(parsed) ? parsed : data
-  } catch {
-    return data
-  }
-}
-const extensions = ref<Extension[]>(loadExtensions())
-
-// == Load Extensions ==
-// When the component is mounted, load the extensions from the localStorage
-onMounted(() => {
-  extensions.value = loadExtensions()
-})
-
-// == Save Extensions ==
-const saveExtensions = (newExtensions: Extension[]) => {
-  extensions.value = newExtensions
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(ExtensionStorageKey, JSON.stringify(newExtensions))
-  }
-}
-
-// == Remove Extension ==
-// When the remove button is clicked, remove the extension from the localStorage
-const handleRemove = (name: string) => {
-  // Filter the extensions to remove the extension (use item's name as a key)
-  saveExtensions(extensions.value.filter((item) => item.name !== name))
-}
-
-// == Toggle Extension ==
-const handleToggleActive = (name: string, isActive: boolean) => {
-  const next = extensions.value.map((item) =>
-    item.name === name ? { ...item, isActive } : item,
-  )
-  saveExtensions(next)
-}
 
 // == Tab Change Handling ==
 const TabStorageKey = 'extension-manager:tab'
@@ -124,7 +79,7 @@ const confirmRemove = (extensionName: string) => {
 </script>
 
 <template>
-  <!-- Remove Modal -->
+  <!-- Remove Confirmation Modal -->
   <ConfirmRemovalModal
     :isOpen="isModalOpen"
     :extensionName="selectedExtensionName"
