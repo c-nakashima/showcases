@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import data from "../public/data.json";
-import { useTheme } from "@/composables/useTheme";
-import { ExtensionCard, ExtensionTabGroup } from "@/components/extension";
 import { ExtensionTabId } from "@/types/extension";
+import { useTheme } from "@/composables/useTheme";
+//components
+import { ExtensionCard, ExtensionTabGroup } from "@/components/extension";
+import { Header } from "@/components/layout";
 
 // Currently active tabs
 const activeTabs = ref<ExtensionTabId[]>(["active"]);
@@ -20,25 +22,7 @@ initTheme();
   >
     <div class="mx-auto max-w-6xl p-6">
       <!-- Header -->
-      <header
-        class="flex justify-between bg-white rounded rounded-2xl p-4 mb-16 dark:bg-neutral-800"
-      >
-        <img
-          :src="`../public/assets/images/${isDark ? 'logo-dark' : 'logo'}.svg`"
-          alt="extensions logo"
-          class="w-[180px]"
-        />
-        <div
-          class="bg-neutral-100 rounded rounded-[12px] w-[50px] h-[50px] p-[14px] cursor-pointer dark:bg-neutral-700"
-          @click="toggleTheme"
-        >
-          <img
-            :src="`../public/assets/images/icon-${isDark ? 'sun' : 'moon'}.svg`"
-            alt="extensions logo"
-            class="w-[180px]"
-          />
-        </div>
-      </header>
+      <Header :isDark @toggleTheme="toggleTheme" />
 
       <!-- Contents -->
       <div
