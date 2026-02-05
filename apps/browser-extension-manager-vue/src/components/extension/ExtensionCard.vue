@@ -11,7 +11,7 @@ import { RemoveButton } from '@/components/extension'
  */
 interface Props {
   logoPath: string
-  name: string
+  extensionName: string
   description: string
   isActive: boolean
 }
@@ -36,7 +36,7 @@ const emit = defineEmits<{
         />
         <div>
           <div class="font-bold text-xl mb-2 dark:text-white">
-            {{ name }}
+            {{ extensionName }}
           </div>
           <p class="text-neutral-600 text-base font-sans dark:text-neutral-300">
             {{ description }}
@@ -46,7 +46,7 @@ const emit = defineEmits<{
     </template>
 
     <template #footer-left>
-      <RemoveButton @remove="emit('remove', name)" />
+      <RemoveButton @remove="emit('remove', extensionName)" />
     </template>
 
     <template #footer-right>

@@ -4,9 +4,12 @@ import data from '../public/data.json'
 import { Extension, ExtensionTabId } from '@/types/extension'
 import { useTheme } from '@/composables/useTheme'
 //components
-import { ExtensionCard, ExtensionTabGroup } from '@/components/extension'
+import {
+  ExtensionCard,
+  ExtensionTabGroup,
+  ConfirmRemovalModal,
+} from '@/components/extension'
 import { Header } from '@/components/layout'
-
 // Currently active tabs
 const activeTab = ref<ExtensionTabId>('active')
 
@@ -17,7 +20,7 @@ const { isDark, initTheme, toggleTheme } = useTheme()
 onMounted(() => initTheme())
 initTheme()
 
-// == Filter Data to Display
+// == Filter Extensions to Display ==
 const storageKey = 'extension-manager:extensions'
 // Load extensions from localStorage
 const loadExtensions = (): Extension[] => {
@@ -36,6 +39,25 @@ const loadExtensions = (): Extension[] => {
   }
 }
 const extensions = ref<Extension[]>(loadExtensions())
+
+// == Load Extensions ==
+// When the component is mounted, load the extensions from the localStorage
+onMounted(() => {
+  extensions.value = loadExtensions()
+})
+
+// == Remove Extension ==
+// When the remove button is clicked, remove the extension from the localStorage
+const handleRemove = (name: string) => {
+  // Filter the extensions to remove the extension (use item's name as a key)
+  extensions.value = extensions.value.filter((item) => item.name !== name)
+  // If the window is not defined, save the extensions to the localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(storageKey, JSON.stringify(extensions.value))
+  }
+}
+
+// == Tab Change Handling ==
 // When the tab is changed, filter data to show
 const filteredExtensions = computed(() => {
   if (activeTab.value === 'all') {
@@ -48,23 +70,32 @@ const filteredExtensions = computed(() => {
   return extensions.value
 })
 
-// When the remove button is clicked, remove the extension from the localStorage
-const handleRemove = (name: string) => {
-  // Filter the extensions to remove the extension (use item's name as a key)
-  extensions.value = extensions.value.filter((item) => item.name !== name)
-  // If the window is not defined, save the extensions to the localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(storageKey, JSON.stringify(extensions.value))
-  }
+// == Remove Modal ==
+const isModalOpen = ref(false)
+const selectedExtensionName = ref('')
+const openModal = (extensionName: string) => {
+  selectedExtensionName.value = extensionName
+  isModalOpen.value = true
 }
-
-// When the component is mounted, load the extensions from the localStorage
-onMounted(() => {
-  extensions.value = loadExtensions()
-})
+const closeModal = () => {
+  isModalOpen.value = false
+  selectedExtensionName.value = ''
+}
+// after the confirm button is clicked, remove the extension from the localStorage
+const confirmRemove = (extensionName: string) => {
+  handleRemove(extensionName)
+  closeModal()
+}
 </script>
 
 <template>
+  <!-- Remove Modal -->
+  <ConfirmRemovalModal
+    :isOpen="isModalOpen"
+    :extensionName="selectedExtensionName"
+    @close="closeModal"
+    @confirm="confirmRemove"
+  />
   <div
     class="min-h-screen bg-gradient-to-b from-[#EBF2FC] to-[#EEFBF9] dark:bg-gradient-to-b dark:from-[#04091B] dark:to-[#091540]"
   >
@@ -87,11 +118,11 @@ onMounted(() => {
         <li v-for="item in filteredExtensions" :key="item.name">
           <ExtensionCard
             :logoPath="item.logoPath"
-            :name="item.name"
+            :extensionName="item.name"
             :description="item.description"
             :isActive="item.isActive"
             @update:isActive="(value) => (item.isActive = value)"
-            @remove="handleRemove"
+            @remove="openModal"
           />
         </li>
       </div>
