@@ -23,7 +23,7 @@ const onToggleTheme = () => emit('toggleTheme')
     class="flex justify-between bg-white rounded rounded-2xl p-4 mb-16 dark:bg-neutral-800"
   >
     <img
-      :src="`/public/assets/images/${isDark ? 'logo-dark' : 'logo'}.svg`"
+      :src="`/assets/images/${isDark ? 'logo-dark' : 'logo'}.svg`"
       alt="extensions logo"
       class="w-[180px]"
     />
@@ -33,7 +33,7 @@ const onToggleTheme = () => emit('toggleTheme')
       aria-label="Toggle theme"
     >
       <img
-        :src="`/public/assets/images/icon-${isDark ? 'sun' : 'moon'}.svg`"
+        :src="`/assets/images/icon-${isDark ? 'sun' : 'moon'}.svg`"
         alt="extensions logo"
         class="w-[180px]"
       />

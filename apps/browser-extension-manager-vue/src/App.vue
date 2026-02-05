@@ -39,9 +39,7 @@ const {
   openModal,
   closeModal,
   confirmRemove,
-} = useRemoveConfirmationModal((extensionName: string) =>
-  handleRemove(extensionName),
-)
+} = useRemoveConfirmationModal(handleRemove)
 </script>
 
 <template>
