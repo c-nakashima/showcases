@@ -6,6 +6,7 @@ import { ExtensionTabId } from '@/types/extension'
 import { useTheme } from '@/composables/useTheme'
 import { useExtensionsStorage } from '@/composables/useExtensionsStorage'
 import { useTabStorage } from '@/composables/useTabStorage'
+import { useRemoveConfirmationModal } from '@/composables/useRemoveConfirmationModal'
 //components
 import {
   ExtensionCard,
@@ -32,24 +33,15 @@ const { extensions, handleRemove, handleToggleActive } =
 const { activeTab, filteredExtensions } = useTabStorage(extensions)
 
 // == Remove Confirmation Modal ==
-const isModalOpen = ref(false)
-const selectedExtensionName = ref('')
-
-const openModal = (extensionName: string) => {
-  selectedExtensionName.value = extensionName
-  isModalOpen.value = true
-}
-
-const closeModal = () => {
-  isModalOpen.value = false
-  selectedExtensionName.value = ''
-}
-
-// after the confirm button is clicked, remove the extension from the localStorage
-const confirmRemove = (extensionName: string) => {
-  handleRemove(extensionName)
-  closeModal()
-}
+const {
+  isModalOpen,
+  selectedExtensionName,
+  openModal,
+  closeModal,
+  confirmRemove,
+} = useRemoveConfirmationModal((extensionName: string) =>
+  handleRemove(extensionName),
+)
 </script>
 
 <template>
