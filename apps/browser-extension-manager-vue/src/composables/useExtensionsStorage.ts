@@ -3,10 +3,9 @@ import type { Extension } from '@/types'
 
 // Extensions Storage related functions
 export function useExtensionsStorage(initialData: Extension[]) {
-  // == Filter Extensions to Display ==
   const ExtensionStorageKey = 'extension-manager:extensions'
 
-  // Load extensions from localStorage
+  // == Load Extensions from localStorage ==
   const loadExtensions = (fallback: Extension[]): Extension[] => {
     // If the window is not defined, return the data
     if (typeof window === 'undefined') return fallback

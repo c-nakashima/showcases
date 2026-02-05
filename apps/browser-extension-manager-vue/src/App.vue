@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import data from '../public/data.json'
 import { ExtensionTabId } from '@/types/extension'
+// Composables
 import { useTheme } from '@/composables/useTheme'
 import { useExtensionsStorage } from '@/composables/useExtensionsStorage'
+import { useTabStorage } from '@/composables/useTabStorage'
 //components
 import {
   ExtensionCard,
@@ -13,9 +15,6 @@ import {
 } from '@/components/extension'
 import { Header } from '@/components/layout'
 
-const { extensions, handleRemove, handleToggleActive } =
-  useExtensionsStorage(data)
-
 // == Switch Theme
 // Theme related variables/functions
 const { isDark, initTheme, toggleTheme } = useTheme()
@@ -23,41 +22,16 @@ const { isDark, initTheme, toggleTheme } = useTheme()
 onMounted(() => initTheme())
 initTheme()
 
-// == Tab Change Handling ==
-const TabStorageKey = 'extension-manager:tab'
-// Load the currently active tab from the localStorage
-const loadActiveTab = (): ExtensionTabId => {
-  if (typeof window === 'undefined') return 'active'
-  const saved = localStorage.getItem(TabStorageKey)
-  if (saved === 'all' || saved === 'active' || saved === 'inactive') {
-    return saved
-  }
-  return 'active'
-}
+// == Extensions Storage ==
+// Extensions Storage related variables/functions
+const { extensions, handleRemove, handleToggleActive } =
+  useExtensionsStorage(data)
 
-// Currently active tab
-const activeTab = ref<ExtensionTabId>(loadActiveTab())
+// == Tab Storage ==
+// Extensions Storage related variables/functions
+const { activeTab, filteredExtensions } = useTabStorage(extensions)
 
-// When the tab is changed, filter the extensions to show
-const filteredExtensions = computed(() => {
-  if (activeTab.value === 'all') {
-    return extensions.value
-  } else if (activeTab.value === 'active') {
-    return extensions.value.filter((e) => e.isActive)
-  } else if (activeTab.value === 'inactive') {
-    return extensions.value.filter((e) => !e.isActive)
-  }
-  return extensions.value
-})
-
-// When the tab is changed, save the currently active tab to the localStorage
-watch(activeTab, (value) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(TabStorageKey, value)
-  }
-})
-
-// == Remove Modal ==
+// == Remove Confirmation Modal ==
 const isModalOpen = ref(false)
 const selectedExtensionName = ref('')
 
