@@ -11,7 +11,7 @@ What I focused on:
 
 ▼ Check out the live demo and code here ▼
 
-🔗 Demo: [https://lnkd.in/giyE_f3j](https://lnkd.in/giyE_f3j)
+🔗 Demo: [https://star-rating-component-react.vercel.app/](https://star-rating-component-react.vercel.app/)
 
 🔗 GitHub: [https://lnkd.in/gx29ZQ6a](https://lnkd.in/gx29ZQ6a)
 
